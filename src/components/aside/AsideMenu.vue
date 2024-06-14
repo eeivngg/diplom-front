@@ -1,8 +1,8 @@
 <template>
-	<div>
+	<div class="flex h-screen">
 		<div
 			:class="[
-				'fixed px-[20px] inset-y-0 transform transition-all duration-150 ease-in-out',
+				'h-full px-[20px] transform transition-all duration-150 ease-in-out',
 				{
 					'w-[70px]': !isOpen,
 					'w-[250px]': isOpen,
@@ -50,7 +50,7 @@
 				</svg>
 			</div>
 
-			<div class="flex flex-col gap-y-[5px] mt-[20px] h-[87%]">
+			<div class="flex flex-col gap-y-[5px] mt-[20px] h-[calc(100%-130px)]">
 				<AsideMenuItem
 					v-for="item in menuItems"
 					:hideText="isOpen"
@@ -74,7 +74,7 @@
 </template>
 
 <script>
-import AsideMenuItem from '@/components/AsideMenu/AsideMenuItem.vue';
+import AsideMenuItem from '@/components/aside/AsideMenuItem.vue';
 
 export default {
 	components: {

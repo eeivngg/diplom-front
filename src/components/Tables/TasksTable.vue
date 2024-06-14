@@ -1,5 +1,5 @@
 <template>
-	<div class="container mx-auto p-6">
+	<div class="w-full mx-auto p-6">
 		<table class="w-full bg-white shadow-lg rounded-lg overflow-hidden">
 			<thead class="bg-gray-100">
 				<tr>
@@ -23,11 +23,7 @@
 					class="even:bg-gray-50 hover:bg-gray-100 py-[10px]"
 				>
 					<td class="border-b border-gray-200 px-4 py-2">
-						<input
-							type="checkbox"
-							v-model="item.selected"
-							class="form-checkbox h-4 w-4 text-blue-600"
-						/>
+						<StatusPopup />
 					</td>
 					<td class="border-b border-gray-200 px-4 py-2">
 						{{ item.organization }}
@@ -44,7 +40,12 @@
 </template>
 
 <script>
+import StatusPopup from '@/components/StatusPopup.vue';
+
 export default {
+	components: {
+		StatusPopup,
+	},
 	data() {
 		return {
 			tasks: [
@@ -68,9 +69,3 @@ export default {
 	},
 };
 </script>
-
-<style scoped>
-.container {
-	max-width: 800px;
-}
-</style>
