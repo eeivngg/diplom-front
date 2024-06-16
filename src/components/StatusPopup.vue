@@ -1,5 +1,5 @@
 <template>
-	<Popper :arrow="true" placement="right">
+	<Popper class="!m-0 !border-0" :arrow="true" placement="right">
 		<div
 			class="!h-[20px] cursor-pointer flex flex-none items-center justify-center bg-white !w-[20px] border-solid border-[#111012] border-[1px] rounded-[6px]"
 		>

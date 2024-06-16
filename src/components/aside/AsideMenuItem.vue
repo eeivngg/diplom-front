@@ -1,6 +1,7 @@
 <template>
 	<router-link :to="link">
 		<div
+			:class="{ 'bg-gray-100': selected }"
 			class="flex hover:bg-gray-100 py-[10px] px-[5px] rounded-[6px] gap-x-[8px] justify-start items-center text-[14px] text-[#1B1B1CCC]"
 		>
 			<slot name="custom-icon" />
@@ -180,6 +181,10 @@ export default {
 		link: {
 			type: String,
 			default: '',
+		},
+		selected: {
+			type: Boolean,
+			default: false,
 		},
 		hideText: {
 			type: Boolean,

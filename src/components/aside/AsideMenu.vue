@@ -55,13 +55,19 @@
 					v-for="item in menuItems"
 					:hideText="isOpen"
 					:key="item"
+					:selected="item.link === selectedRoute"
 					:link="item.link"
 					:icon="item.icon"
 					:title="item.title"
 				/>
 			</div>
 
-			<AsideMenuItem :hideText="isOpen" link="/account" title="Борис Борисов">
+			<AsideMenuItem
+				:selected="'/account' === selectedRoute"
+				:hideText="isOpen"
+				link="/account"
+				title="Борис Борисов"
+			>
 				<template #custom-icon>
 					<img
 						src="https://static.kinoafisha.info/k/articles/1200/upload/articles/754987571881.jpg.webp"
@@ -83,7 +89,11 @@ export default {
 	data() {
 		return {
 			isOpen: true,
-			menuItems: [
+		};
+	},
+	computed: {
+		menuItems() {
+			const items = [
 				{
 					link: '/main',
 					onlyForAdmin: false,
@@ -108,8 +118,14 @@ export default {
 					title: 'Заявки сотрудников',
 					icon: 'employees-apps',
 				},
-			],
-		};
+			];
+
+			return items;
+		},
+		selectedRoute() {
+			const currentRoute = this.$route.path;
+			return currentRoute;
+		},
 	},
 	methods: {
 		toggleSidebar() {

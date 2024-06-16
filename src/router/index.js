@@ -1,5 +1,6 @@
 import App from '@/App.vue';
-import MainPage from '@/components/pages/MainPage.vue';
+import AccountPage from '@/components/pages/AccountPage.vue';
+import MainPage from '@/components/pages/MainPageView.vue';
 import { createRouter, createWebHistory } from "vue-router";
 
 const routes = [
@@ -8,6 +9,9 @@ const routes = [
   },
   {
     path: '/main', component: MainPage
+  },
+  {
+    path: '/account', component: AccountPage
   }
 ]
 

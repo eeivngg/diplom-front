@@ -23,7 +23,9 @@
 					class="even:bg-gray-50 hover:bg-gray-100 py-[10px]"
 				>
 					<td class="border-b border-gray-200 px-4 py-2">
-						<StatusPopup />
+						<div class="flex w-full justify-center items-center">
+							<StatusPopup />
+						</div>
 					</td>
 					<td class="border-b border-gray-200 px-4 py-2">
 						{{ item.organization }}
@@ -51,7 +53,7 @@ export default {
 			tasks: [
 				{
 					selected: false,
-					organization: 'Организация 1',
+					organization: 'Организация 1sdflksfjslkfsdjlfksdjflskjf',
 					task: 'Задача 1',
 					responsible: 'Иван Иванов',
 					date: '2023-06-01',
