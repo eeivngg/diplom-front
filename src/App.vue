@@ -1,6 +1,6 @@
 <template>
-	<div class="flex">
-		<AsideMenu />
+	<div class="flex w-full">
+		<AsideMenu v-if="showAsideMenu" />
 		<router-view />
 	</div>
 </template>
@@ -10,6 +10,15 @@ import AsideMenu from '@/components/aside/AsideMenu.vue';
 export default {
 	components: {
 		AsideMenu,
+	},
+	computed: {
+		showAsideMenu() {
+			if (this.$route.path === '/login') {
+				return false;
+			}
+
+			return true;
+		},
 	},
 };
 </script>

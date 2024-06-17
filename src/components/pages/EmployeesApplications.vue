@@ -11,7 +11,7 @@
 
 <script>
 import Navbar from '@/components/NavBar.vue';
-import EmployeesTasksTable from '@/components/Tables/EmployeesTasksTable.vue';
+import EmployeesTasksTable from '@/components/tables/EmployeesTasksTable.vue';
 
 export default {
 	components: {

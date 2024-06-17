@@ -1,8 +1,9 @@
 import App from '@/App.vue';
 import AccountPage from '@/components/pages/AccountPage.vue';
+import EmployeesApplications from '@/components/pages/EmployeesApplications.vue';
 import EmployeesPage from '@/components/pages/EmployeesPage.vue';
 import IncomingApplications from '@/components/pages/IncomingApplications.vue';
-import EmployeesApplications from '@/components/pages/EmployeesApplications.vue'
+import LoginPage from '@/components/pages/LoginPage.vue';
 import MainPage from '@/components/pages/MainPageView.vue';
 import { createRouter, createWebHistory } from "vue-router";
 
@@ -24,6 +25,9 @@ const routes = [
   },
   {
     path: '/employees-applications', component: EmployeesApplications
+  },
+  {
+    path: '/login', component: LoginPage
   }
 ]
 
