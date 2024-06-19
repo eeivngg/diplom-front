@@ -1,8 +1,8 @@
 <template>
-	<div class="flex w-full flex-col px-[50px] py-[20px]">
+	<div class="flex w-full flex-col px-[20px] py-[25px]">
 		<NavBar title="Сотрудники" />
 		<div
-			class="w-full mt-[20px] flex flex-col gap-y-[20px] h-[calc(100vh-10vh)] overflow-y-auto"
+			class="w-full mt-[20px] flex flex-col gap-y-[10px] h-[calc(100vh-10vh)] overflow-y-auto"
 		>
 			<EmployeeItem v-for="i in 30" :key="i" />
 		</div>

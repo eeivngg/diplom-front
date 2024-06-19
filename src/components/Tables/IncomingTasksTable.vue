@@ -1,40 +1,44 @@
 <template>
-	<div class="w-full h-full mx-auto p-6">
-		<table class="w-full bg-white shadow-lg rounded-lg overflow-hidden">
-			<thead class="bg-gray-100">
+	<div class="container mx-auto px-4 py-8">
+		<table class="min-w-full bg-white">
+			<thead>
 				<tr>
-					<th class="border-b border-gray-200 px-4 py-2 text-left">Выбор</th>
-					<th class="border-b border-gray-200 px-4 py-2 text-left">
-						Название организации
+					<th
+						class="w-1/4 px-4 py-4 border-b-2 border-gray-300 bg-gray-100 text-left"
+					>
+						Статус
 					</th>
-					<th class="border-b border-gray-200 px-4 py-2 text-left">Задача</th>
-					<th class="border-b border-gray-200 px-4 py-2 text-left">
-						Ответственный
+					<th
+						class="w-1/4 px-4 py-4 border-b-2 border-gray-300 bg-gray-100 text-left"
+					>
+						Организация
 					</th>
-					<th class="border-b border-gray-200 px-4 py-2 text-left">
-						Дата создания задачи
+					<th
+						class="w-1/4 px-4 py-4 border-b-2 border-gray-300 bg-gray-100 text-left"
+					>
+						Задачи
+					</th>
+					<th
+						class="w-1/4 px-4 py-4 border-b-2 border-gray-300 bg-gray-100 text-left"
+					>
+						Дата создания
 					</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr
-					v-for="(item, index) in tasks"
+					v-for="(row, index) in rows"
 					:key="index"
-					class="even:bg-gray-50 hover:bg-gray-100 py-[10px]"
+					:class="{ 'bg-gray-100': index % 2 === 0 }"
 				>
-					<td class="border-b border-gray-200 px-4 py-2">
-						<div class="flex w-full justify-start items-center">
-							<StatusPopup />
-						</div>
+					<td class="px-4 py-4 border-b border-gray-300">{{ row.status }}</td>
+					<td class="px-4 py-4 border-b border-gray-300">
+						{{ row.organization }}
 					</td>
-					<td class="border-b border-gray-200 px-4 py-2">
-						{{ item.organization }}
+					<td class="px-4 py-4 border-b border-gray-300">{{ row.tasks }}</td>
+					<td class="px-4 py-4 border-b border-gray-300">
+						{{ row.createdAt }}
 					</td>
-					<td class="border-b border-gray-200 px-4 py-2">{{ item.task }}</td>
-					<td class="border-b border-gray-200 px-4 py-2">
-						{{ item.responsible }}
-					</td>
-					<td class="border-b border-gray-200 px-4 py-2">{{ item.date }}</td>
 				</tr>
 			</tbody>
 		</table>
@@ -42,186 +46,41 @@
 </template>
 
 <script>
-import StatusPopup from '@/components/StatusPopup.vue';
-
 export default {
-	components: {
-		StatusPopup,
-	},
 	data() {
 		return {
-			tasks: [
+			rows: [
 				{
-					selected: false,
-					organization: 'Организация 1sdflksfjslkfsdjlfksdjflskjf',
-					task: 'Задача 1',
-					responsible: 'Иван Иванов',
-					date: '2023-06-01',
+					status: 'Выполнено',
+					organization: 'Организация 1',
+					tasks: 'Задача 1, Задача 2',
+					createdAt: '2023-01-01',
 				},
 				{
-					selected: false,
+					status: 'В процессе',
 					organization: 'Организация 2',
-					task: 'Задача 2',
-					responsible: 'Петр Петров',
-					date: '2023-06-02',
+					tasks: 'Задача 3',
+					createdAt: '2023-01-02',
 				},
 				{
-					selected: false,
-					organization: 'Организация 2',
-					task: 'Задача 2',
-					responsible: 'Петр Петров',
-					date: '2023-06-02',
+					status: 'Не начато',
+					organization: 'Организация 3',
+					tasks: 'Задача 4, Задача 5',
+					createdAt: '2023-01-03',
 				},
 				{
-					selected: false,
-					organization: 'Организация 2',
-					task: 'Задача 2',
-					responsible: 'Петр Петров',
-					date: '2023-06-02',
+					status: 'Выполнено',
+					organization: 'Организация 4',
+					tasks: 'Задача 6',
+					createdAt: '2023-01-04',
 				},
-				{
-					selected: false,
-					organization: 'Организация 2',
-					task: 'Задача 2',
-					responsible: 'Петр Петров',
-					date: '2023-06-02',
-				},
-				{
-					selected: false,
-					organization: 'Организация 2',
-					task: 'Задача 2',
-					responsible: 'Петр Петров',
-					date: '2023-06-02',
-				},
-				{
-					selected: false,
-					organization: 'Организация 2',
-					task: 'Задача 2',
-					responsible: 'Петр Петров',
-					date: '2023-06-02',
-				},
-				{
-					selected: false,
-					organization: 'Организация 2',
-					task: 'Задача 2',
-					responsible: 'Петр Петров',
-					date: '2023-06-02',
-				},
-				{
-					selected: false,
-					organization: 'Организация 2',
-					task: 'Задача 2',
-					responsible: 'Петр Петров',
-					date: '2023-06-02',
-				},
-				{
-					selected: false,
-					organization: 'Организация 2',
-					task: 'Задача 2',
-					responsible: 'Петр Петров',
-					date: '2023-06-02',
-				},
-				{
-					selected: false,
-					organization: 'Организация 2',
-					task: 'Задача 2',
-					responsible: 'Петр Петров',
-					date: '2023-06-02',
-				},
-				{
-					selected: false,
-					organization: 'Организация 2',
-					task: 'Задача 2',
-					responsible: 'Петр Петров',
-					date: '2023-06-02',
-				},
-				{
-					selected: false,
-					organization: 'Организация 2',
-					task: 'Задача 2',
-					responsible: 'Петр Петров',
-					date: '2023-06-02',
-				},
-				{
-					selected: false,
-					organization: 'Организация 2',
-					task: 'Задача 2',
-					responsible: 'Петр Петров',
-					date: '2023-06-02',
-				},
-				{
-					selected: false,
-					organization: 'Организация 2',
-					task: 'Задача 2',
-					responsible: 'Петр Петров',
-					date: '2023-06-02',
-				},
-				{
-					selected: false,
-					organization: 'Организация 2',
-					task: 'Задача 2',
-					responsible: 'Петр Петров',
-					date: '2023-06-02',
-				},
-				{
-					selected: false,
-					organization: 'Организация 2',
-					task: 'Задача 2',
-					responsible: 'Петр Петров',
-					date: '2023-06-02',
-				},
-				{
-					selected: false,
-					organization: 'Организация 2',
-					task: 'Задача 2',
-					responsible: 'Петр Петров',
-					date: '2023-06-02',
-				},
-				{
-					selected: false,
-					organization: 'Организация 2',
-					task: 'Задача 2',
-					responsible: 'Петр Петров',
-					date: '2023-06-02',
-				},
-				{
-					selected: false,
-					organization: 'Организация 2',
-					task: 'Задача 2',
-					responsible: 'Петр Петров',
-					date: '2023-06-02',
-				},
-				{
-					selected: false,
-					organization: 'Организация 2',
-					task: 'Задача 2',
-					responsible: 'Петр Петров',
-					date: '2023-06-02',
-				},
-				{
-					selected: false,
-					organization: 'Организация 2',
-					task: 'Задача 2',
-					responsible: 'Петр Петров',
-					date: '2023-06-02',
-				},
-				{
-					selected: false,
-					organization: 'Организация 2',
-					task: 'Задача 2',
-					responsible: 'Петр Петров',
-					date: '2023-06-02',
-				},
-				{
-					selected: false,
-					organization: 'Организация 2',
-					task: 'Задача 2',
-					responsible: 'Петр Петров',
-					date: '2023-06-02',
-				},
-				// Добавьте здесь больше задач по необходимости
+				// добавьте больше строк по необходимости
 			],
 		};
 	},
 };
 </script>
+
+<style scoped>
+/* ваши стили */
+</style>

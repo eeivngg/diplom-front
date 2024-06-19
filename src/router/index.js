@@ -5,35 +5,75 @@ import EmployeesPage from '@/components/pages/EmployeesPage.vue';
 import IncomingApplications from '@/components/pages/IncomingApplications.vue';
 import LoginPage from '@/components/pages/LoginPage.vue';
 import MainPage from '@/components/pages/MainPageView.vue';
-import { createRouter, createWebHistory } from "vue-router";
+import RegisterPage from '@/components/pages/RegisterPage.vue';
+import { createRouter, createWebHistory } from 'vue-router';
+import { checkIsUserLogged } from './checkers/checkIsUserLogged';
 
 const routes = [
-  {
-    path: '/', component: App
-  },
-  {
-    path: '/main', component: MainPage
-  },
-  {
-    path: '/account', component: AccountPage
-  },
-  {
-    path: '/incoming-applications', component: IncomingApplications
-  },
-  {
-    path: '/employees', component: EmployeesPage
-  },
-  {
-    path: '/employees-applications', component: EmployeesApplications
-  },
-  {
-    path: '/login', component: LoginPage
-  }
-]
+	{
+		path: '/',
+		component: App,
+		redirect: '/main',
+	},
+	{
+		name: 'MainPage',
+		path: '/main',
+		component: MainPage,
+	},
+	{
+		name: 'Account',
+		path: '/account',
+		component: AccountPage,
+	},
+	{
+		name: 'IncomingApplications',
+		path: '/incoming-applications',
+		component: IncomingApplications,
+	},
+	{
+		name: 'Employees',
+		path: '/employees',
+		component: EmployeesPage,
+	},
+	{
+		name: 'EmployeesApplications',
+		path: '/employees-applications',
+		component: EmployeesApplications,
+	},
+	{
+		name: 'Login',
+		path: '/login',
+		component: LoginPage,
+	},
+	{
+		name: 'Register',
+		path: '/register',
+		component: RegisterPage,
+	},
+	{
+		path: '/:catchAll(.*)',
+		redirect: '/login',
+		beforeEnter: checkIsUserLogged,
+	},
+];
 
 const router = createRouter({
-  history: createWebHistory(),
-  routes: routes
-})
+	history: createWebHistory(),
+	routes: routes,
+});
 
-export default router
+router.beforeEach((to, from, next) => {
+	const isAuthenticated = localStorage.getItem('userToken') || null;
+	if (!isAuthenticated && to.path !== '/login' && to.path !== '/register') {
+		next('/login');
+	} else if (
+		isAuthenticated &&
+		(to.path === '/login' || to.path === '/register')
+	) {
+		next('/main');
+	} else {
+		next();
+	}
+});
+
+export default router;

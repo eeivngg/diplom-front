@@ -13,7 +13,8 @@ export default {
 	},
 	computed: {
 		showAsideMenu() {
-			if (this.$route.path === '/login') {
+			const forbiddedRoutes = ['/login', '/register'];
+			if (forbiddedRoutes.includes(this.$route.path)) {
 				return false;
 			}
 
