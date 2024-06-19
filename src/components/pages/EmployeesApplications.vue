@@ -4,19 +4,42 @@
 		<div
 			class="flex w-full max-h-[calc(100vh-10vh)] overflow-x-hidden overflow-y-auto"
 		>
-			<EmployeesTasksTable />
+			<ApplicationsTable v-if="showTable" :applications="applications" />
 		</div>
 	</div>
 </template>
 
 <script>
 import Navbar from '@/components/NavBar.vue';
-import EmployeesTasksTable from '@/components/tables/EmployeesTasksTable.vue';
+import { useApplicationsStore } from '@/store/applicationsStore';
+import { useUserStore } from '@/store/userStore';
+import { mapStores } from 'pinia';
+import ApplicationsTable from '@/components/tables/ApplicationsTable.vue';
 
 export default {
 	components: {
-		EmployeesTasksTable,
+		ApplicationsTable,
 		Navbar,
+	},
+	data() {
+		return {
+			showTable: false,
+		};
+	},
+	computed: {
+		...mapStores(useApplicationsStore, useUserStore),
+		applications() {
+			return this.applicationsStore.applications;
+		},
+		currentUser() {
+			return this.userStore.currentUser;
+		},
+	},
+	async mounted() {
+		await this.applicationsStore.getEmployeesApplications(
+			this.currentUser.organizationId
+		);
+		this.showTable = true;
 	},
 };
 </script>

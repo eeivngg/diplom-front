@@ -13,6 +13,16 @@ export async function registerWithoutCode(data) {
 	}
 }
 
+export async function authWithHash(data) {
+	try {
+		const response = await axios.post('http://localhost:3000/hash-auth', data);
+
+		return response.data;
+	} catch (error) {
+		return Promise.reject(error);
+	}
+}
+
 export async function registerWithCode(data) {
 	try {
 		const response = await axios.post(
@@ -29,6 +39,23 @@ export async function registerWithCode(data) {
 export async function login(data) {
 	try {
 		const response = await axios.post('http://localhost:3000/login', data);
+
+		return response.data;
+	} catch (error) {
+		return Promise.reject(error);
+	}
+}
+
+export async function getUsersInOrganization(organizationId) {
+	try {
+		const response = await axios.get(
+			'http://localhost:3000/users-in-organization',
+			{
+				params: {
+					organizationId: organizationId,
+				},
+			}
+		);
 
 		return response.data;
 	} catch (error) {

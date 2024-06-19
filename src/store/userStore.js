@@ -11,6 +11,10 @@ export const useUserStore = defineStore('user', {
 			const response = await UserApi.login(data);
 			this.setCurrentUser(response);
 		},
+		async authWithHash(data) {
+			const response = await UserApi.authWithHash(data);
+			this.setCurrentUser(response);
+		},
 		async registerWithoutCode(data) {
 			const response = await UserApi.registerWithoutCode(data);
 			this.setCurrentUser(response);
@@ -19,8 +23,13 @@ export const useUserStore = defineStore('user', {
 			const response = await UserApi.registerWithCode(data);
 			this.setCurrentUser(response);
 		},
+		async getUsersInOrganization(organizationId) {
+			const response = await UserApi.getUsersInOrganization(organizationId);
+			this.allUsers = response;
+		},
 		setCurrentUser(data) {
-			localStorage.setItem('userToken', data._id);
+			localStorage.setItem('userToken', data.hash);
+			localStorage.setItem('userEmail', data.email);
 			this.currentUser = data;
 		},
 	},

@@ -66,7 +66,7 @@
 				:selected="'/account' === selectedRoute"
 				:hideText="isOpen"
 				link="/account"
-				title="Борис Борисов"
+				:title="currentUser?.name"
 			>
 				<template #custom-icon>
 					<img
@@ -81,6 +81,8 @@
 
 <script>
 import AsideMenuItem from '@/components/aside/AsideMenuItem.vue';
+import { useUserStore } from '@/store/userStore';
+import { mapStores } from 'pinia';
 
 export default {
 	components: {
@@ -92,6 +94,10 @@ export default {
 		};
 	},
 	computed: {
+		...mapStores(useUserStore),
+		currentUser() {
+			return this.userStore.currentUser;
+		},
 		menuItems() {
 			const items = [
 				{

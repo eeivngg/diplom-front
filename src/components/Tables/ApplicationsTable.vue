@@ -16,6 +16,11 @@
 					<th
 						class="w-1/4 px-4 py-4 border-b-2 border-gray-300 bg-gray-100 text-left"
 					>
+						Ответственный
+					</th>
+					<th
+						class="w-1/4 px-4 py-4 border-b-2 border-gray-300 bg-gray-100 text-left"
+					>
 						Задачи
 					</th>
 					<th
@@ -40,6 +45,9 @@
 						{{ application.title }}
 					</td>
 					<td class="px-4 py-4 border-b border-gray-300">
+						<div class="flex">{{ application.responsibleUser }}</div>
+					</td>
+					<td class="px-4 py-4 border-b border-gray-300">
 						<div class="flex flex-col gap-y-[30px]">
 							<span v-for="task in application.tasks" :key="task">
 								{{ task.title }}
@@ -57,7 +65,10 @@
 
 <script>
 import StatusPopup from '@/components/StatusPopup.vue';
+import { useUserStore } from '@/store/userStore';
+import { formatDate } from '@/utils/functions';
 import { formatTasksArray } from '@/utils/servicesTypes';
+import { mapStores } from 'pinia';
 
 export default {
 	components: {
@@ -70,6 +81,10 @@ export default {
 		},
 	},
 	computed: {
+		...mapStores(useUserStore),
+		allUsers() {
+			return this.userStore.allUsers;
+		},
 		formattedApplications() {
 			const formattedTasks = [];
 
@@ -77,6 +92,10 @@ export default {
 				const data = {
 					...this.applications[i],
 					tasks: formatTasksArray(this.applications[i].tasks),
+					createdAt: formatDate(this.applications[i].createdAt),
+					responsibleUser: this.allUsers.find(
+						(user) => user._id === this.applications[i].responsibleUserId
+					),
 				};
 
 				formattedTasks.push(data);

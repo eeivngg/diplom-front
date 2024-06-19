@@ -1,5 +1,6 @@
 <template>
-	<div class="flex w-full">
+	<PageLoader v-if="isPageLoading" />
+	<div v-if="!isPageLoading" class="flex w-full">
 		<AsideMenu v-if="showAsideMenu" />
 		<router-view />
 	</div>
@@ -7,11 +8,22 @@
 
 <script>
 import AsideMenu from '@/components/aside/AsideMenu.vue';
+import { mapStores } from 'pinia';
+import PageLoader from '@/components/PageLoader.vue';
+import { useApplicationsStore } from './store/applicationsStore';
+import { useUserStore } from './store/userStore';
 export default {
 	components: {
 		AsideMenu,
+		PageLoader,
+	},
+	data() {
+		return {
+			isPageLoading: false,
+		};
 	},
 	computed: {
+		...mapStores(useApplicationsStore, useUserStore),
 		showAsideMenu() {
 			const forbiddedRoutes = ['/login', '/register'];
 			if (forbiddedRoutes.includes(this.$route.path)) {
@@ -20,6 +32,30 @@ export default {
 
 			return true;
 		},
+		currentUser() {
+			return this.userStore.currentUser;
+		},
+	},
+	async mounted() {
+		this.isPageLoading = true;
+		const userEmail = localStorage.getItem('userEmail');
+		const userPassword = localStorage.getItem('userToken');
+
+		if (!userEmail || !userPassword) {
+			this.isPageLoading = false;
+			return;
+		}
+
+		const data = {
+			email: userEmail,
+			hash: userPassword,
+		};
+
+		await this.userStore.authWithHash(data);
+		await this.userStore.getUsersInOrganization(
+			this.currentUser.organizationId
+		);
+		this.isPageLoading = false;
 	},
 };
 </script>
