@@ -43,12 +43,17 @@ export default {
 			type: Number,
 			default: 0,
 		},
+		applicationId: {
+			type: String,
+			default: '',
+		},
 	},
 	data() {
 		return {
 			localStatus: 0,
 		};
 	},
+	emits: ['selectStatus'],
 	mounted() {
 		this.localStatus = this.currentStatus;
 	},
@@ -83,6 +88,10 @@ export default {
 		selectStatus(status, closePopper) {
 			this.localStatus = status;
 			closePopper();
+			this.$emit('selectStatus', {
+				applicationId: this.applicationId,
+				status: this.localStatus,
+			});
 		},
 	},
 };

@@ -19,7 +19,7 @@
 						Ответственный
 					</th>
 					<th
-						class="w-1/4 px-4 py-4 border-b-2 border-gray-300 bg-gray-100 text-left"
+						class="w-1/6 px-4 py-4 border-b-2 border-gray-300 bg-gray-100 text-left"
 					>
 						Задачи
 					</th>
@@ -32,6 +32,7 @@
 			</thead>
 			<tbody>
 				<tr
+					@click="openProperties(application)"
 					v-for="(application, index) in formattedApplications"
 					:key="index"
 					:class="{ 'bg-gray-100': index % 2 === 0 }"
@@ -39,20 +40,28 @@
 					<td
 						class="w-1/4 px-4 py-4 border-b border-gray-300 flex items-center justify-center"
 					>
-						<StatusPopup />
+						<StatusPopup
+							@click.stop
+							class="!ml-[30px]"
+							:key="application._id"
+							@selectStatus="onSelectNewStatus"
+							:currentStatus="application.status"
+							:applicationId="application._id"
+						/>
 					</td>
 					<td class="px-4 py-4 border-b border-gray-300">
 						{{ application.title }}
 					</td>
 					<td class="px-4 py-4 border-b border-gray-300">
-						<div class="flex">{{ application.responsibleUser }}</div>
+						<SetResponsibleButton
+							@click.stop
+							@setResponsible="onSetResponsible"
+							:applicationId="application._id"
+							:responsibleUser="application.responsibleUser"
+						/>
 					</td>
 					<td class="px-4 py-4 border-b border-gray-300">
-						<div class="flex flex-col gap-y-[30px]">
-							<span v-for="task in application.tasks" :key="task">
-								{{ task.title }}
-							</span>
-						</div>
+						{{ application.tasks }}
 					</td>
 					<td class="px-4 py-4 border-b border-gray-300">
 						{{ application.createdAt }}
@@ -67,12 +76,14 @@
 import StatusPopup from '@/components/StatusPopup.vue';
 import { useUserStore } from '@/store/userStore';
 import { formatDate } from '@/utils/functions';
-import { formatTasksArray } from '@/utils/servicesTypes';
 import { mapStores } from 'pinia';
+import SetResponsibleButton from '@/components/SetResponsibleButton.vue';
+import { useApplicationsStore } from '@/store/applicationsStore';
 
 export default {
 	components: {
 		StatusPopup,
+		SetResponsibleButton,
 	},
 	props: {
 		applications: {
@@ -80,8 +91,12 @@ export default {
 			default: () => [],
 		},
 	},
+	emits: ['openProperties'],
 	computed: {
-		...mapStores(useUserStore),
+		...mapStores(useUserStore, useApplicationsStore),
+		currentUser() {
+			return this.userStore.currentUser;
+		},
 		allUsers() {
 			return this.userStore.allUsers;
 		},
@@ -91,10 +106,10 @@ export default {
 			for (let i = 0; i < this.applications.length; i++) {
 				const data = {
 					...this.applications[i],
-					tasks: formatTasksArray(this.applications[i].tasks),
+					tasks: this.applications[i].tasks.length,
 					createdAt: formatDate(this.applications[i].createdAt),
 					responsibleUser: this.allUsers.find(
-						(user) => user._id === this.applications[i].responsibleUserId
+						(user) => user._id === this.applications[i].responsibleUser
 					),
 				};
 
@@ -102,6 +117,41 @@ export default {
 			}
 
 			return formattedTasks;
+		},
+	},
+	methods: {
+		async onSelectNewStatus(data) {
+			const application = this.applications.find(
+				(application) => application._id === data.applicationId
+			);
+
+			let responsibleUserId = application.responsibleUser;
+
+			if (!responsibleUserId) {
+				responsibleUserId = this.currentUser._id;
+			}
+
+			await this.applicationsStore.updateApplication(
+				data.status,
+				responsibleUserId,
+				data.applicationId
+			);
+		},
+		async onSetResponsible(user, applicationId) {
+			const application = this.applications.find(
+				(application) => application._id === applicationId
+			);
+
+			await this.applicationsStore.updateApplication(
+				application.status,
+				user._id,
+				applicationId
+			);
+
+			this.applicationsStore.removeApplicationLocally(applicationId);
+		},
+		openProperties(application) {
+			this.$emit('openProperties', application);
 		},
 	},
 };

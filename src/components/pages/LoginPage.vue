@@ -80,6 +80,7 @@ export default {
 			try {
 				await this.userStore.login(data);
 				this.$router.push('/main');
+				window.location.reload();
 			} catch (error) {
 				if (error?.response?.data?.message === 'user not found') {
 					this.errorMessage = 'Неправильный логин или пароль';

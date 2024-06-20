@@ -23,6 +23,20 @@ export async function authWithHash(data) {
 	}
 }
 
+export async function getInviteCode(organizationId) {
+	try {
+		const response = await axios.get('http://localhost:3000/get-invite-code', {
+			params: {
+				organizationId: organizationId,
+			},
+		});
+
+		return response.data;
+	} catch (error) {
+		return Promise.reject(error);
+	}
+}
+
 export async function registerWithCode(data) {
 	try {
 		const response = await axios.post(
@@ -63,25 +77,48 @@ export async function getUsersInOrganization(organizationId) {
 	}
 }
 
-export async function getCurrentUser() {}
-
-export async function getAllUsers() {}
-
-export async function checkUserExistence() {
+export async function removeUser(userId) {
 	try {
-		const response = await axios.get('http://localhost:3000/check-user', {
-			params: {
-				id: '667090d6187a14ce6e3c913b',
-			},
+		const response = await axios.post('http://localhost:3000/delete-user', {
+			id: userId,
 		});
 
-		console.log('response is', response);
+		return response.data;
 	} catch (error) {
-		console.log('existence error', error);
+		return Promise.reject(error);
 	}
 }
 
-export async function removeUser() {}
+export async function updateUser(data) {
+	try {
+		const response = await axios.patch(
+			'http://localhost:3000/update-user',
+			data
+		);
+
+		return response.data;
+	} catch (error) {
+		return Promise.reject(error);
+	}
+}
+
+export async function getOrganizationCreatorId(organizationId) {
+	try {
+		const response = await axios.get(
+			'http://localhost:3000/organization-creator-id',
+			{
+				params: {
+					organizationId: organizationId,
+				},
+			}
+		);
+
+		console.log('response', response);
+		return response.data;
+	} catch (error) {
+		return Promise.reject(error);
+	}
+}
 
 export async function updatePassword() {}
 

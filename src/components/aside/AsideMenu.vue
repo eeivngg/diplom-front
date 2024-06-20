@@ -69,9 +69,9 @@
 				:title="currentUser?.name"
 			>
 				<template #custom-icon>
-					<img
-						src="https://static.kinoafisha.info/k/articles/1200/upload/articles/754987571881.jpg.webp"
-						class="flex-none w-[24px] h-[24px] rounded-[6px]"
+					<UserAvatar
+						:showAdmin="currentUser?.role === 1"
+						class="w-[24px] h-[24px]"
 					/>
 				</template>
 			</AsideMenuItem>
@@ -81,12 +81,15 @@
 
 <script>
 import AsideMenuItem from '@/components/aside/AsideMenuItem.vue';
+import UserAvatar from '@/components/UserAvatar.vue';
 import { useUserStore } from '@/store/userStore';
+import { USER_ROLES } from '@/utils/userRoles';
 import { mapStores } from 'pinia';
 
 export default {
 	components: {
 		AsideMenuItem,
+		UserAvatar,
 	},
 	data() {
 		return {
@@ -114,7 +117,7 @@ export default {
 				},
 				{
 					link: '/employees',
-					onlyForAdmin: true,
+					onlyForAdmin: false,
 					title: 'Сотрудники',
 					icon: 'employees',
 				},
@@ -125,6 +128,10 @@ export default {
 					icon: 'employees-apps',
 				},
 			];
+
+			if (this.currentUser.role !== USER_ROLES.admin) {
+				return items.filter((item) => item.onlyForAdmin === false);
+			}
 
 			return items;
 		},

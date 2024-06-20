@@ -71,12 +71,10 @@ export async function updateApplication(
 
 export async function removeApplication(applicationId) {
 	try {
-		const response = await axios.delete(
+		const response = await axios.post(
 			'http://localhost:3000/remove-application',
 			{
-				params: {
-					applicationId: applicationId,
-				},
+				applicationId: applicationId,
 			}
 		);
 
@@ -86,14 +84,14 @@ export async function removeApplication(applicationId) {
 	}
 }
 
-export async function createApplication() {
+export async function createApplication(tasks, title) {
 	try {
 		const response = await axios.post(
 			'http://localhost:3000/create-application',
 			{
 				organizationId: '667228d04ea3c87805b24f40',
-				tasks: [1, 2, 3, 4, 5, 6, 7, 8],
-				organizationTitle: 'some test title' + new Date().getTime().toString(),
+				tasks: tasks,
+				organizationTitle: title,
 			}
 		);
 

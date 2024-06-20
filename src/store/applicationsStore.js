@@ -30,15 +30,37 @@ export const useApplicationsStore = defineStore('applications', {
 				responsibleUserId,
 				applicationId
 			);
-			console.log('change response', response);
+
+			this.updateApplicationLocally(response);
 		},
 		async removeApplication(applicationId) {
-			const response = await ApplicationsApi.removeApplication(applicationId);
-			console.log('remove app resp', response);
+			await ApplicationsApi.removeApplication(applicationId);
+			this.removeApplicationLocally(applicationId);
 		},
-		async createApplications() {
-			const response = await ApplicationsApi.createApplication();
-			console.log('response', response);
+		async createApplication(tasks, organizationTitle) {
+			await ApplicationsApi.createApplication(tasks, organizationTitle);
+		},
+		updateApplicationLocally(data) {
+			const applicationIndex = this.applications.findIndex(
+				(application) => application._id === data._id
+			);
+
+			if (applicationIndex === -1) {
+				return;
+			}
+
+			this.applications[applicationIndex] = data;
+		},
+		removeApplicationLocally(applicationId) {
+			const applicationIndex = this.applications.findIndex(
+				(application) => application._id === applicationId
+			);
+
+			if (applicationIndex === -1) {
+				return;
+			}
+
+			this.applications.splice(applicationIndex, 1);
 		},
 	},
 });

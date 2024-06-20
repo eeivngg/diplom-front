@@ -25,8 +25,12 @@ export default {
 	computed: {
 		...mapStores(useApplicationsStore, useUserStore),
 		showAsideMenu() {
-			const forbiddedRoutes = ['/login', '/register'];
+			const forbiddedRoutes = ['/login', '/register', '/landing'];
 			if (forbiddedRoutes.includes(this.$route.path)) {
+				return false;
+			}
+
+			if (!this.currentUser) {
 				return false;
 			}
 
@@ -51,11 +55,19 @@ export default {
 			hash: userPassword,
 		};
 
-		await this.userStore.authWithHash(data);
-		await this.userStore.getUsersInOrganization(
-			this.currentUser.organizationId
-		);
-		this.isPageLoading = false;
+		try {
+			await this.userStore.authWithHash(data);
+			await this.userStore.getUsersInOrganization(
+				this.currentUser.organizationId
+			);
+			await this.userStore.getOrganizationCreatorId(
+				this.currentUser.organizationId
+			);
+		} catch (error) {
+			console.log('error', error);
+		} finally {
+			this.isPageLoading = false;
+		}
 	},
 };
 </script>
