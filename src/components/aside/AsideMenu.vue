@@ -12,7 +12,7 @@
 		>
 			<div class="flex justify-around items-center mt-[20px] py-[10px]">
 				<span v-if="isOpen" class="text-[18px] font-bold text-[#1B1B1CCC]">
-					Рекламное агенство
+					Консалтинговое агентство
 				</span>
 
 				<svg

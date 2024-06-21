@@ -25,7 +25,7 @@
 
 <script>
 import Navbar from '@/components/NavBar.vue';
-import ApplicationsTable from '@/components/tables/ApplicationsTable.vue';
+import ApplicationsTable from '@/components/Tables/ApplicationsTable.vue';
 import ModalboxApplicationProperties from '@/components/modalboxes/ModalBoxApplicationProperties.vue';
 import { useApplicationsStore } from '@/store/applicationsStore';
 import { useUserStore } from '@/store/userStore';

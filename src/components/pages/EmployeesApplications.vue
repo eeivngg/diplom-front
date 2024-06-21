@@ -30,7 +30,7 @@ import Navbar from '@/components/NavBar.vue';
 import { useApplicationsStore } from '@/store/applicationsStore';
 import { useUserStore } from '@/store/userStore';
 import { mapStores } from 'pinia';
-import ApplicationsTable from '@/components/tables/ApplicationsTable.vue';
+import ApplicationsTable from '@/components/Tables/ApplicationsTable.vue';
 import ModalBoxApplicationProperties from '@/components/modalboxes/ModalBoxApplicationProperties.vue';
 
 export default {

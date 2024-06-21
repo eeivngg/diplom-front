@@ -3,7 +3,7 @@
 		<!-- Навигационная панель -->
 		<nav class="bg-gray-800 p-4">
 			<div class="container mx-auto flex justify-between items-center">
-				<div class="text-white text-2xl">Рекламное Агентство</div>
+				<div class="text-white text-2xl">Консалтинговое Агентство "13|22"</div>
 				<div class="space-x-4">
 					<router-link to="/login">
 						<button class="bg-blue-500 text-white px-4 py-2 rounded">
@@ -29,7 +29,7 @@
 		>
 			<div class="bg-gray-800 bg-opacity-75 p-8 rounded">
 				<h1 class="text-4xl font-bold mb-4">
-					Добро пожаловать в наше рекламное агентство
+					Добро пожаловать в наше консалтинговое агентство
 				</h1>
 				<p class="text-lg">
 					Мы занимаемся продвижением вашего бизнеса с помощью современных
