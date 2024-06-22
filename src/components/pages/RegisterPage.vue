@@ -101,24 +101,25 @@ export default {
 	},
 	methods: {
 		async register() {
-			if (!this.inviteCode) {
-				const data = {
-					name: this.userName,
-					email: this.userEmail,
-					password: this.userPassword,
-				};
+			// if (!this.inviteCode) {
+			// 	const data = {
+			// 		name: this.userName,
+			// 		email: this.userEmail,
+			// 		password: this.userPassword,
+			// 	};
 
-				try {
-					await this.userStore.registerWithoutCode(data);
-					this.$router.push('/main');
-				} catch (error) {
-					if (error?.response?.data?.message === 'user already exists') {
-						this.errorMessage = 'Пользователь с таким email уже существует';
-					} else {
-						this.errorMessage = 'Произошла непредвиденная ошибка';
-					}
-				}
-			} else {
+			// 	try {
+			// 		await this.userStore.registerWithoutCode(data);
+			// 		this.$router.push('/main');
+			// 	} catch (error) {
+			// 		if (error?.response?.data?.message === 'user already exists') {
+			// 			this.errorMessage = 'Пользователь с таким email уже существует';
+			// 		} else {
+			// 			this.errorMessage = 'Произошла непредвиденная ошибка';
+			// 		}
+			// 	}
+			// } 
+			// else {
 				const data = {
 					name: this.userName,
 					email: this.userEmail,
@@ -131,13 +132,17 @@ export default {
 					this.$router.push('/main');
 				} catch (error) {
 					console.log('error is', error);
+					if (!this.userName || !this.userEmail || !this.userPassword) {
+						this.errorMessage = 'Заполните обязательные поля'
+						return
+					} 
 					if (error?.response?.data?.message === 'invite code not found') {
 						this.errorMessage = 'Пригласительный код нейдействителен';
 					} else {
 						this.errorMessage = 'Произошла непредвиденная ошибка';
 					}
 				}
-			}
+			// }
 		},
 	},
 };

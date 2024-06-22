@@ -9,6 +9,7 @@ import MainPage from '@/components/pages/MainPageView.vue';
 import RegisterPage from '@/components/pages/RegisterPage.vue';
 import { createRouter, createWebHistory } from 'vue-router';
 import { checkIsUserLogged } from './checkers/checkIsUserLogged';
+import { useUserStore } from '@/store/userStore';
 
 const routes = [
 	{
@@ -82,7 +83,7 @@ router.beforeEach((to, from, next) => {
 		isAuthenticated &&
 		(to.path === '/login' || to.path === '/register')
 	) {
-		next('/main');
+		next('/incoming-applications')
 	} else {
 		next();
 	}

@@ -132,7 +132,7 @@ export default {
 			if (this.currentUser.role !== USER_ROLES.admin) {
 				return items.filter((item) => item.onlyForAdmin === false);
 			}
-
+			
 			return items;
 		},
 		selectedRoute() {

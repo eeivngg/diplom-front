@@ -79,7 +79,10 @@ export default {
 
 			try {
 				await this.userStore.login(data);
-				this.$router.push('/main');
+				// this.$router.push('/main');
+				// console.log(this.userStore.currentUser);
+				const route = this.userStore.currentUser.role === 1 ? '/incoming-applications' : '/main';
+				this.$router.push(route);
 				window.location.reload();
 			} catch (error) {
 				if (error?.response?.data?.message === 'user not found') {

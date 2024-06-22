@@ -63,6 +63,9 @@ export default {
 		},
 	},
 	async mounted() {
+		if (this.currentUser.role !== 1) {
+			this.$router.push('/main')
+		}
 		await this.applicationsStore.getIncomingApplications(this.organizationId);
 		this.showTable = true;
 	},
